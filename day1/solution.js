@@ -3,11 +3,16 @@ const fs = require("fs");
 const input = fs.readFileSync("input.txt", "utf8").trim();
 const lines = input.split("\n");
 
+const coffeeTemps = lines.slice(0, lines.length/2);
+const preferences = lines.slice(lines.length/2);
+
 let warmCoffee = 0;
 let coldCoffee = 0;
 let totalSeconds = 0;
 let totalDegrees = 0;
 let totalTime = 0;
+
+let timeSpent = 0;
 
 for (const line of lines) {
     const temp = Number(line)
@@ -28,6 +33,22 @@ for (const line of lines) {
     }
 }
 
+for (let i = 0; i < coffeeTemps.length; i++) {
+
+    difference = coffeeTemps[i] - preferences[i];
+
+    if (difference > 0) {
+
+        timeSpent += difference * 5;
+        
+    } else if (difference < 0) {
+        
+        timeSpent += Math.abs(difference);
+        
+    }
+
+}
+
 let totalTotalTime = 0;
 
 totalTotalTime = totalTime + totalSeconds;
@@ -37,3 +58,8 @@ console.log("cold: " + coldCoffee);
 console.log(totalSeconds);
 
 console.log (totalTotalTime);
+
+console.log(coffeeTemps.length);
+console.log(preferences.length);
+
+console.log(timeSpent);
